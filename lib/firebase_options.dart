@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBNMFL0imq0H4VvPT0eN1UZCw6LAhAMvKI',
-    appId: '1:72455098160:web:f99d3462540e46d82042f5',
-    messagingSenderId: '72455098160',
-    projectId: 'feedbackapp-5e826',
-    authDomain: 'feedbackapp-5e826.firebaseapp.com',
-    storageBucket: 'feedbackapp-5e826.appspot.com',
-    measurementId: 'G-FLDDNKNWBH',
+    apiKey: 'AIzaSyAs9oWt1r6f_FxyC-IeAs_0ye4XQZdbsok',
+    appId: '1:687257829326:web:9a481c3adf4f275e47759f',
+    messagingSenderId: '687257829326',
+    projectId: 'survey-83712',
+    authDomain: 'survey-83712.firebaseapp.com',
+    storageBucket: 'survey-83712.appspot.com',
+    measurementId: 'G-H3S0HP8T7C',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD0y3fOsPiMG4kyTTwg96XnqEPMu6QeuRg',
-    appId: '1:72455098160:android:4eb872934a8d59dd2042f5',
-    messagingSenderId: '72455098160',
-    projectId: 'feedbackapp-5e826',
-    storageBucket: 'feedbackapp-5e826.appspot.com',
+    apiKey: 'AIzaSyASzOXCuncNL9BMP-8-K7-vsZrXs8C95LE',
+    appId: '1:687257829326:android:9afc4d104bf3821d47759f',
+    messagingSenderId: '687257829326',
+    projectId: 'survey-83712',
+    storageBucket: 'survey-83712.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDTfLUlgE12ooJG62cuZGuWwbabKJhPnlc',
-    appId: '1:72455098160:ios:d40b1a48b49aa9642042f5',
-    messagingSenderId: '72455098160',
-    projectId: 'feedbackapp-5e826',
-    storageBucket: 'feedbackapp-5e826.appspot.com',
+    apiKey: 'AIzaSyCGIFR--G0kkaXOf8Wh8RjBeZMZNpXq2_0',
+    appId: '1:687257829326:ios:f1090b8b819b3b8c47759f',
+    messagingSenderId: '687257829326',
+    projectId: 'survey-83712',
+    storageBucket: 'survey-83712.appspot.com',
     iosBundleId: 'com.example.feedbackapp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDTfLUlgE12ooJG62cuZGuWwbabKJhPnlc',
-    appId: '1:72455098160:ios:eb4f5e3873a485c42042f5',
-    messagingSenderId: '72455098160',
-    projectId: 'feedbackapp-5e826',
-    storageBucket: 'feedbackapp-5e826.appspot.com',
+    apiKey: 'AIzaSyCGIFR--G0kkaXOf8Wh8RjBeZMZNpXq2_0',
+    appId: '1:687257829326:ios:c1ac1e676a0653c947759f',
+    messagingSenderId: '687257829326',
+    projectId: 'survey-83712',
+    storageBucket: 'survey-83712.appspot.com',
     iosBundleId: 'com.example.feedbackapp.RunnerTests',
   );
 }
