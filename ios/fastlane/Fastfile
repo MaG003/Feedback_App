@@ -1,0 +1,32 @@
+default_platform(:ios)
+
+platform :ios do
+
+  lane :beta do
+    match(
+        app_identifier: ["app.bundle.id"],
+        git_url: "https://github.com/MaG003/Feedback_App.git",
+        type: "development",
+        git_branch: "main",
+        readonly: true,
+        force: false
+    )
+          
+    clean_build_artifacts
+    
+    build_app(
+        scheme: "Runner",
+        archive_path: "./build/Runner.xcarchive",
+        export_method: "development",
+        configuration: "Release",
+        output_directory: "./build/Runner"
+    )
+ 
+    firebase_app_distribution(
+        app: "1:687257829326:ios:f1090b8b819b3b8c47759f",
+        firebase_cli_token: "1//0euAyEgI7BG7RCgYIARAAGA4SNwF-L9IrsQ9zEwYSlMRoOerNd0KJAi1q45EFSIUqsppgGfalpmvcTDQj1mVdkiar6j5SrkccTRY",
+        ipa_path: "./build/Runner/Runner.ipa",
+        groups: "testers"
+    )
+  end
+end
