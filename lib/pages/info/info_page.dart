@@ -13,7 +13,6 @@ class InfoPage extends StatelessWidget {
       child: Scaffold(
         body: Stack(
           children: [
-            // Nền của trang
             Container(
               width: double.infinity,
               height: double.infinity,
@@ -22,9 +21,8 @@ class InfoPage extends StatelessWidget {
                 190,
                 192,
                 194,
-              ), // Đặt màu nền của trang
+              ),
             ),
-            // Hình chữ nhật không có hiệu ứng làm mờ
             Center(
               child: Container(
                 width: 702,
@@ -56,7 +54,7 @@ class InfoPage extends StatelessWidget {
                       Row(
                         children: [
                           InfoText('Showroom', fontSize: 16, height: 1.6),
-                          SizedBox(width: 0), // Điều chỉnh theo nhu cầu
+                          SizedBox(width: 0),
                           ListboxComponentShowroom(),
                         ],
                       ),
@@ -66,12 +64,11 @@ class InfoPage extends StatelessWidget {
                       Row(
                         children: [
                           InfoText('Bộ phận', fontSize: 16, height: 1.6),
-                          SizedBox(width: 0), // Điều chỉnh theo nhu cầu
+                          SizedBox(width: 0),
                           ListboxComponentPart(),
                         ],
                       ),
-                      SizedBox(height: 70),        
-                      // Nút Lưu, thống kê
+                      SizedBox(height: 70),
                       Row(
                         children: [
                           StatisticButton(),
@@ -204,8 +201,6 @@ class SaveButton extends StatelessWidget {
         print('Selected Showroom: $selectedShowroom');
         // ignore: avoid_print
         print('Selected Part: $selectedPart');
-
-        // Điều hướng đến trang FeedbackPage và truyền các giá trị đã chọn
 
         context.goNamed(
           RoutersName.feedbackName,

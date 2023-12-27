@@ -4,12 +4,12 @@ class DottedBorderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..color = const Color(0xFFFF0000) // Màu đường viền
+      ..color = const Color(0xFFFF0000) 
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1; // Độ dày của đường viền
+      ..strokeWidth = 1; 
 
-    const double dashWidth = 5; // Độ dài của mỗi đoạn nét đứt
-    const double dashSpace = 5; // Khoảng cách giữa các đoạn nét đứt
+    const double dashWidth = 5; 
+    const double dashSpace = 5; 
 
     double startX = 0;
     while (startX < size.width) {

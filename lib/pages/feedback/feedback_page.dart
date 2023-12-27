@@ -65,17 +65,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   List<String> otherOpinionsList = List.filled(4, '');
 
-  int selectedImageValue =
-      -1; // Giả sử không có hình ảnh nào được chọn ban đầu.
+  int selectedImageValue = -1;
 
-  // Hàm callback để xử lý sự kiện khi chạm vào hình ảnh trong ImageGallery
   void handleImageTap(int index) {
-    // Kiểm tra xem hình ảnh được chọn có phải là hình ảnh hiện tại hay không
-    if (selectedImageValue == index + 1) {
-      // Thực hiện các hành động tương tác với hình ảnh được chọn
-      // ...
-    }
-    // Thực hiện các hành động tương tác khác tùy ý.
+    if (selectedImageValue == index + 1) {}
   }
 
   void resetForm() {
@@ -167,10 +160,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
           return GestureDetector(
             onTap: () {
               setState(() {
-                // Cập nhật giá trị của hình ảnh được chọn
-                selectedImageValue = i + 1; // Gán giá trị từ 1 đến 5
+                selectedImageValue = i + 1;
               });
-              // Gọi hàm callback khi chạm vào hình ảnh
               onTap(i);
             },
             child: _buildImage('assets/images/Rectangle${5 - i}.png',
@@ -326,7 +317,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: TextField(
-          // Thay đổi onChanged để cập nhật danh sách ngay khi nhập liệu thay vì sau khi blur (mất focus)
           onChanged: (value) {
             otherOpinionsList[titleIndex] = value;
           },
@@ -348,9 +338,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
       isSubmitting = true;
     });
     try {
-      // Dữ liệu phản hồi
       final List<Map<String, dynamic>> feedbackDataList = [];
-      // Thêm dữ liệu selectedPart và selectedShowroom vào feedbackDataList
       feedbackDataList.add({
         'title': 'Selected Part',
         'selectedPart': widget.selectedPart,
@@ -372,21 +360,16 @@ class _FeedbackPageState extends State<FeedbackPage> {
         Map<String, dynamic> feedbackItem = {
           'title': checklistData[i]['title'],
         };
-
-        // Kiểm tra xem mục đã được chọn
         if (selectedItems[i] != -1) {
           feedbackItem['selectedChecklistData'] =
               checklistData[i]['items'][selectedItems[i]];
         }
-
-        // Kiểm tra xem có ý kiến khác cho câu hỏi này và thêm nó vào mục phản hồi.
         if (otherOpinionsList[i].isNotEmpty) {
           feedbackItem['otherOpinion'] = otherOpinionsList[i];
         }
 
         feedbackDataList.add(feedbackItem);
       }
-
       if (feedbackDataList.isNotEmpty) {
         await feedbackCollection.add({
           'timestamp': FieldValue.serverTimestamp(),
@@ -394,11 +377,9 @@ class _FeedbackPageState extends State<FeedbackPage> {
         });
       }
       resetForm();
-      // Thực hiện các hành động bổ sung sau khi gửi phản hồi thành công.
     } catch (e) {
       // ignore: avoid_print
       print('Lỗi khi lưu dữ liệu phản hồi: $e');
-      // Xử lý lỗi (hiển thị thông báo lỗi cho người dùng nếu cần).
     }
   }
 
@@ -406,14 +387,13 @@ class _FeedbackPageState extends State<FeedbackPage> {
     return InkWell(
       onTap: () {
         if (!isSubmitting) {
-          // Thực hiện hành động đánh giá của bạn ở đây
           sendFeedbackToFirestore();
         }
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
-        height: 40, // Đặt kích thước nút ở đây
+        height: 40,
         width: 80,
         // width: isSubmitting ? 40 : double.infinity,
         decoration: BoxDecoration(
@@ -429,7 +409,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   'Đánh giá',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 14, // Đặt kích thước chữ ở đây
+                    fontSize: 14,
                     fontFamily: 'Manrope',
                     fontWeight: FontWeight.w700,
                     letterSpacing: -0.30,
