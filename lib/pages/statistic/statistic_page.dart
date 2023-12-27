@@ -24,14 +24,12 @@ class _StatisticPageState extends State<StatisticPage> {
     _feedbackStream =
         FirebaseFirestore.instance.collection('feedback').snapshots();
 
-    // Gán giá trị cho dataList từ dữ liệu Firestore
     _feedbackStream.listen((snapshot) {
       setState(() {
         dataList = snapshot.docs
             .map((doc) => doc.data() as Map<String, dynamic>)
             .toList();
-        localDataList = List.from(
-            dataList); // Lưu trữ bản sao của dataList để khôi phục sau khi hủy lọc
+        localDataList = List.from(dataList);
       });
     });
   }
@@ -68,7 +66,7 @@ class _StatisticPageState extends State<StatisticPage> {
                         width: 150,
                         child: InkWell(
                           onTap: () {
-                            showFilterDialog(); // Hiển thị hộp thoại lọc
+                            showFilterDialog();
                           },
                           customBorder: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(7.0),
@@ -91,7 +89,6 @@ class _StatisticPageState extends State<StatisticPage> {
                         width: 100,
                         child: InkWell(
                           onTap: () {
-                            // Xử lý khi nhấn vào "Bộ phận"
                             showPartFilterDialog();
                           },
                           customBorder: RoundedRectangleBorder(
@@ -113,7 +110,6 @@ class _StatisticPageState extends State<StatisticPage> {
                         width: 170,
                         child: InkWell(
                           onTap: () {
-                            // Xử lý khi nhấn vào "Đánh giá trải nghiệm"
                             showImageFilterDialog();
                           },
                           customBorder: RoundedRectangleBorder(
@@ -241,18 +237,17 @@ class _StatisticPageState extends State<StatisticPage> {
   MaterialStateColor? getRowColor(Map<String, dynamic> map) {
     String? rating = getSelectedChecklistData(map, 'feedback hình ảnh');
     if (rating == 'Tệ' || rating == 'Rất tệ') {
-      return MaterialStateColor.resolveWith(
-          (states) => Colors.red); // Sử dụng màu đỏ
+      return MaterialStateColor.resolveWith((states) => Colors.red);
     }
     if (rating == 'Bình thường') {
-      return MaterialStateColor.resolveWith((states) =>
-          const Color.fromARGB(255, 216, 244, 54)); // Sử dụng màu đỏ
+      return MaterialStateColor.resolveWith(
+          (states) => const Color.fromARGB(255, 216, 244, 54));
     }
     if (rating == 'Tốt' || rating == 'Rất tốt') {
       return MaterialStateColor.resolveWith(
-          (states) => const Color.fromARGB(255, 54, 244, 95)); // Sử dụng màu đỏ
+          (states) => const Color.fromARGB(255, 54, 244, 95));
     }
-    return null; // Sử dụng màu mặc định nếu không phải là đánh giá xấu
+    return null;
   }
 
   String? getSelectedChecklistData(Map<String, dynamic> map, String title) {
@@ -261,7 +256,6 @@ class _StatisticPageState extends State<StatisticPage> {
       for (var item in feedbackDataList) {
         if (item is Map<String, dynamic> && item.containsKey('title')) {
           if (item['title'] == title) {
-            // Xử lý trường hợp đặc biệt cho selectedImageValue
             if (title == 'feedback hình ảnh'.toString() &&
                 item['selectedImageValue'] != null) {
               int selectedImageValue = item['selectedImageValue'];
@@ -296,7 +290,7 @@ class _StatisticPageState extends State<StatisticPage> {
   }
 
   void showFilterDialog() {
-    List<String> selectedShowrooms = []; // Danh sách showroom đã chọn
+    List<String> selectedShowrooms = [];
 
     showDialog(
       context: context,
@@ -308,7 +302,6 @@ class _StatisticPageState extends State<StatisticPage> {
               content: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    // Hiển thị danh sách tên Showroom với checkbox
                     for (String showroomName in getShowroomNames())
                       CheckboxListTile(
                         title: Text(showroomName),
@@ -325,38 +318,34 @@ class _StatisticPageState extends State<StatisticPage> {
                           });
                         },
                       ),
-                    const SizedBox(
-                        height:
-                            20), // Khoảng cách giữa danh sách và nút Áp dụng, Hủy
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).pop(); // Đóng hộp thoại
+                            Navigator.of(context).pop();
                             applyShowroomFilter(selectedShowrooms);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green, // Màu xanh lá
+                            backgroundColor: Colors.green,
                           ),
                           child: const Text(
                             'Áp dụng',
-                            style:
-                                TextStyle(color: Colors.white), // Màu chữ trắng
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).pop(); // Đóng hộp thoại
-                            cancelFilter(); // Hủy lọc
+                            Navigator.of(context).pop();
+                            cancelFilter();
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red, // Màu đỏ
+                            backgroundColor: Colors.red,
                           ),
                           child: const Text(
                             'Hủy',
-                            style:
-                                TextStyle(color: Colors.white), // Màu chữ trắng
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ],
@@ -371,7 +360,6 @@ class _StatisticPageState extends State<StatisticPage> {
     );
   }
 
-  // Hàm này sẽ áp dụng bộ lọc theo danh sách các showroom đã chọn và cập nhật giao diện
   void applyShowroomFilter(List<String> selectedShowrooms) {
     setState(() {
       this.selectedShowrooms = selectedShowrooms;
@@ -382,18 +370,14 @@ class _StatisticPageState extends State<StatisticPage> {
     });
   }
 
-  // Hàm này sẽ hủy bỏ bộ lọc và cập nhật giao diện
   void cancelFilter() {
     setState(() {
-      selectedShowrooms = []; // Đặt danh sách showroom đã chọn về rỗng
-      dataList =
-          List.from(localDataList); // Khôi phục danh sách dữ liệu ban đầu
+      selectedShowrooms = [];
+      dataList = List.from(localDataList);
     });
   }
 
-  // Hàm này sẽ trả về danh sách các tên Showroom duy nhất từ dữ liệu
   List<String> getShowroomNames() {
-    // Lấy danh sách các tên Showroom từ dataList
     Set<String> showroomNames = {};
     for (var map in dataList) {
       var showroomName = getSelectedChecklistData(map, 'Selected Showroom');
@@ -405,7 +389,7 @@ class _StatisticPageState extends State<StatisticPage> {
   }
 
   void showPartFilterDialog() {
-    List<String> selectedParts = []; // Danh sách bộ phận đã chọn
+    List<String> selectedParts = [];
 
     showDialog(
       context: context,
@@ -417,7 +401,6 @@ class _StatisticPageState extends State<StatisticPage> {
               content: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    // Hiển thị danh sách tên bộ phận với checkbox
                     for (String partName in getPartNames())
                       CheckboxListTile(
                         title: Text(partName),
@@ -436,17 +419,17 @@ class _StatisticPageState extends State<StatisticPage> {
                       ),
                     const SizedBox(
                       height: 20,
-                    ), // Khoảng cách giữa danh sách và nút Áp dụng, Hủy
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).pop(); // Đóng hộp thoại
+                            Navigator.of(context).pop();
                             applyPartFilter(selectedParts);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green, // Màu xanh lá
+                            backgroundColor: Colors.green,
                           ),
                           child: const Text(
                             'Áp dụng',
@@ -455,11 +438,11 @@ class _StatisticPageState extends State<StatisticPage> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).pop(); // Đóng hộp thoại
-                            cancelPartFilter(); // Hủy lọc
+                            Navigator.of(context).pop();
+                            cancelPartFilter();
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red, // Màu đỏ
+                            backgroundColor: Colors.red,
                           ),
                           child: const Text(
                             'Hủy',
@@ -478,7 +461,6 @@ class _StatisticPageState extends State<StatisticPage> {
     );
   }
 
-// Hàm này sẽ áp dụng bộ lọc theo danh sách các bộ phận đã chọn và cập nhật giao diện
   void applyPartFilter(List<String> selectedParts) {
     setState(() {
       this.selectedParts = selectedParts;
@@ -489,18 +471,14 @@ class _StatisticPageState extends State<StatisticPage> {
     });
   }
 
-// Hàm này sẽ hủy bỏ bộ lọc và cập nhật giao diện
   void cancelPartFilter() {
     setState(() {
-      selectedParts = []; // Đặt danh sách bộ phận đã chọn về rỗng
-      dataList =
-          List.from(localDataList); // Khôi phục danh sách dữ liệu ban đầu
+      selectedParts = [];
+      dataList = List.from(localDataList);
     });
   }
 
-// Hàm này sẽ trả về danh sách các tên bộ phận duy nhất từ dữ liệu
   List<String> getPartNames() {
-    // Lấy danh sách các tên bộ phận từ dataList
     Set<String> partNames = {};
     for (var map in dataList) {
       var partName = getSelectedChecklistData(map, 'Selected Part');
@@ -512,8 +490,7 @@ class _StatisticPageState extends State<StatisticPage> {
   }
 
   void showImageFilterDialog() {
-    List<String> selectedImageRatings =
-        []; // Danh sách đánh giá hình ảnh đã chọn
+    List<String> selectedImageRatings = [];
 
     showDialog(
       context: context,
@@ -525,7 +502,6 @@ class _StatisticPageState extends State<StatisticPage> {
               content: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    // Hiển thị danh sách đánh giá hình ảnh với checkbox
                     for (String rating in getImageRatings())
                       CheckboxListTile(
                         title: Text(rating),
@@ -544,17 +520,17 @@ class _StatisticPageState extends State<StatisticPage> {
                       ),
                     const SizedBox(
                       height: 20,
-                    ), // Khoảng cách giữa danh sách và nút Áp dụng, Hủy
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).pop(); // Đóng hộp thoại
+                            Navigator.of(context).pop();
                             applyImageFilter(selectedImageRatings);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green, // Màu xanh lá
+                            backgroundColor: Colors.green,
                           ),
                           child: const Text(
                             'Áp dụng',
@@ -563,11 +539,11 @@ class _StatisticPageState extends State<StatisticPage> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).pop(); // Đóng hộp thoại
-                            cancelImageFilter(); // Hủy lọc
+                            Navigator.of(context).pop();
+                            cancelImageFilter();
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red, // Màu đỏ
+                            backgroundColor: Colors.red,
                           ),
                           child: const Text(
                             'Hủy',
@@ -586,7 +562,6 @@ class _StatisticPageState extends State<StatisticPage> {
     );
   }
 
-// Hàm này sẽ áp dụng bộ lọc theo danh sách các đánh giá hình ảnh đã chọn và cập nhật giao diện
   void applyImageFilter(List<String> selectedImageRatings) {
     setState(() {
       this.selectedImageRatings = selectedImageRatings;
@@ -597,19 +572,14 @@ class _StatisticPageState extends State<StatisticPage> {
     });
   }
 
-// Hàm này sẽ hủy bỏ bộ lọc và cập nhật giao diện
   void cancelImageFilter() {
     setState(() {
-      selectedImageRatings =
-          []; // Đặt danh sách đánh giá hình ảnh đã chọn về rỗng
-      dataList =
-          List.from(localDataList); // Khôi phục danh sách dữ liệu ban đầu
+      selectedImageRatings = [];
+      dataList = List.from(localDataList);
     });
   }
 
-// Hàm này sẽ trả về danh sách các đánh giá hình ảnh duy nhất từ dữ liệu
   List<String> getImageRatings() {
-    // Lấy danh sách các đánh giá hình ảnh từ dataList
     Set<String> imageRatings = {};
     for (var map in dataList) {
       var rating = getSelectedChecklistData(map, 'feedback hình ảnh');

@@ -1,0 +1,56 @@
+default_platform(:ios)
+
+# Credentials (for later)
+git_authorization = "https://github.com/MaG003/survey.git"
+firebase_app_id = "1:687257829326:ios:f1090b8b819b3b8c47759f"
+firebase_cli_token = "1//0eJAz8b5phHMKCgYIARAAGA4SNwF-L9Irv2mux9Uz7KmIRLhnzNsqy8cPXo-Y2nzmHLZM2569ysDLbVzNFr0Nn4abJY698r0ek3g"
+
+# Team
+team_id = "<testers>"
+
+# Keychains
+keychain_user = "temp"
+keychain_pass = "temp"
+
+def delete_temp_keychain(name)
+  delete_keychain(
+  name: name
+  ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
+end
+
+def create_temp_keychain(name, password)
+  create_keychain(
+  name: name,
+  password: password,
+  unlock: false,
+  timeout: 0
+  )
+end
+
+def ensure_temp_keychain(name, password)
+  delete_temp_keychain(name)
+  create_temp_keychain(name, password)
+end
+
+platform :ios do
+  desc "Deploy iOS to Firebase"
+  lane :deploy do
+    ensure_temp_keychain(keychain_user, keychain_pass)
+
+    gym(
+      scheme: "Runner",
+      archive_path: "./build/Runner.xcarchive",
+      export_method: "ad-hoc",
+      output_directory: "./build/Runner",
+    )
+
+    firebase_app_distribution(
+      app: firebase_app_id,
+      firebase_cli_token: firebase_cli_token,
+      release_notes: "Bug fixes and performance improvements",
+      groups: "internal",
+    )
+
+    delete_temp_keychain(keychain_user)
+  end
+end
